@@ -17,7 +17,7 @@ module.exports = defineConfig({
     runMode: 2,
   },
   env: {
-    apiUrl: process.env.REACT_APP_API_URL,
+    apiUrl: process.env.START_URL,
     mobileViewportWidthBreakpoint: 414,
     coverage: false,
     codeCoverage: {
