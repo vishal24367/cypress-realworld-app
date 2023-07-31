@@ -11,6 +11,7 @@ global_job_config:
     - name: CiChecks
       commands:
         - yarn build:ci
+        - yarn run cypress install
         - yarn cypress info
         - yarn cypress cache list
         - yarn types
