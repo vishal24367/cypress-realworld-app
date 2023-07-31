@@ -12,7 +12,9 @@
     "url": "https://github.com/cypress-io/cypress-realworld-app/issues"
   },
   "engines": {
-    "node": "^16.16.0"
+    "node": "^16.16.0",
+    "npm": "8.x",
+    "yarn": "1.22.x"
   },
   "dependencies": {
     "@auth0/auth0-react": "2.1.1",
@@ -43,6 +45,7 @@
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
     "react-virtualized": "9.22.5",
+    "serve": "^14.2.0",
     "shortid": "2.2.16",
     "uuid": "8.3.2",
     "xstate": "4.35.4",
@@ -151,6 +154,7 @@
     "cypress:open:mobile": "cypress open --config viewportWidth=375,viewportHeight=667",
     "cypress:run": "cypress run",
     "cypress:run:component": "cypress run --component",
+    "cy:run:neetoCI": "wait-on $START_URL && CYPRESS_BASE_URL=$START_URL cypress run --env grepTags=$GREP_TAGS,configFile=$ENVIRONMENT --tag=$TAG --browser $BROWSER --headless --record --key $RECORD_KEY --parallel --ci-build-id $CI_BUILD_ID",
     "cypress:run:mobile": "cypress run --config viewportWidth=375,viewportHeight=667",
     "test": "yarn cypress:open",
     "test:headless": "yarn cypress:run",
@@ -179,7 +183,8 @@
     "eject": "react-scripts eject",
     "codesandbox:start:api": "yarn tsnode:not-instrumented --files backend/app.ts",
     "codesandbox:start": "NODE_ENV=development TSC_COMPILE_ON_ERROR=true concurrently \"react-scripts start\" yarn:start:api:codesandbox",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "env": {
