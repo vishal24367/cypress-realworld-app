@@ -17,11 +17,11 @@ module.exports = defineConfig({
     runMode: 2,
   },
   env: {
-    apiUrl: "http://localhost:13001",
+    apiUrl: "http://localhost:3001",
     mobileViewportWidthBreakpoint: 414,
     coverage: false,
     codeCoverage: {
-      url: "http://localhost:13001/__coverage__",
+      url: "http://localhost:3001/__coverage__",
       exclude: "cypress/**/*.*",
     },
     defaultPassword: process.env.SEED_DEFAULT_USER_PASSWORD,
@@ -63,7 +63,7 @@ module.exports = defineConfig({
     },
   },
   e2e: {
-    baseUrl: "http://localhost:13000",
+    baseUrl: "http://localhost:3000",
     specPattern: "cypress/tests/**/*.spec.{js,jsx,ts,tsx}",
     supportFile: "cypress/support/e2e.ts",
     viewportHeight: 1000,
