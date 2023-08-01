@@ -5,6 +5,8 @@ parallelism: 10
 envs:
   - key: CY_GROUP_SPEC
     value: "API|chrome|cypress/tests/api/*"
+  - key: DEPLOYMENT_URL
+    value: "http://localhost:3000"
 triggers:
   - event: pull_request_labeled
     label: cypress-backend-testing

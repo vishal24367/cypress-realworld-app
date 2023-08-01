@@ -5,6 +5,8 @@ parallelism: 10
 envs:
   - key: CY_GROUP_SPEC
     value: "UI - Chrome|chrome|cypress/tests/ui/*"
+  - key: DEPLOYMENT_URL
+    value: "http://localhost:3000"
 triggers:
   - event: pull_request_labeled
     label: cypress-run
