@@ -4,10 +4,10 @@ fail_fast: false
 parallelism: 10
 envs:
   - key: CY_GROUP_SPEC
-    value: "UI - Chrome|chrome|cypress/tests/ui/*"
+    value: "API|chrome|cypress/tests/api/*"
 triggers:
   - event: pull_request_labeled
-    label: cypress-run
+    label: cypress-backend-testing
 global_job_config:
   setup:
     - checkout
@@ -34,12 +34,12 @@ global_job_config:
 lifecycle:
   on_running:
     - action: remove_labels
-      labels: ["cypress-run"]
+      labels: ["cypress-backend-testing"]
     - action: add_labels
-      labels: ["cypress-triggered"]
+      labels: ["cypress-triggered-backend-testing"]
 
   on_complete:
     - action: remove_labels
-      labels: ["cypress-triggered"]
+      labels: ["cypress-triggered-backend-testing"]
     - action: add_labels
-      labels: ["cypress-completed"]
+      labels: ["cypress-completed-backend-testing"]
