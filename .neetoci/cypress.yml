@@ -33,8 +33,7 @@ global_job_config:
       commands:
         - yarn build:ci
         - yarn run cypress install
-        - cross-env NODE_ENV=test yarn:start:react:proxy-server &
-        - cross-env NODE_ENV=test yarn:start:api &
+        - yarn start:ci & 
         - npx wait-on http://localhost:3000
         - npx cypress run --headless --parallel --record --key $RECORD_KEY --browser $CY_BROWSER --ci-build-id $CI_BUILD_ID --group "$CY_GROUP" --spec "$CY_SPEC"
         - yarn lint
