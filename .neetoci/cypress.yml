@@ -20,6 +20,7 @@ envs:
 triggers:
   - event: pull_request_labeled
     label: cypress-run
+  
 global_job_config:
   setup:
     - checkout
@@ -30,11 +31,12 @@ global_job_config:
   jobs:
     - name: Cypress
       commands:
-        - yarn run cypress install
         - yarn build:ci
+        - yarn run cypress install
         - yarn start:ci & npx wait-on http://localhost:3000
         - npx cypress run --headless --parallel --record --key $RECORD_KEY --browser $CY_BROWSER --ci-build-id $CI_BUILD_ID --group "$CY_GROUP" --spec "$CY_SPEC"
-        - echo "Cypress tests completed"
+        - yarn lint
+        - yarn test:unit:ci
 lifecycle:
   on_running:
     - action: remove_labels
