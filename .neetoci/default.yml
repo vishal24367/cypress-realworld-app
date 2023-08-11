@@ -1,6 +1,6 @@
 version: v1.0
 name: neetoCi
-parallelism: 3
+parallelism: 1
 global_job_config:
   setup:
     - checkout
