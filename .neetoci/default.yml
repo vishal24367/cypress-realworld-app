@@ -5,6 +5,7 @@ global_job_config:
   setup:
     - checkout
     - neetoci-version node 16.16.0
+    - neetoci-service start postgres 16
     - cache restore
     - yarn install
     - cache store
