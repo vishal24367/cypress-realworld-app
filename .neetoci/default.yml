@@ -1,6 +1,7 @@
 version: v1.0
 name: neetoCi
 parallelism: 1
+plan: professional-1
 global_job_config:
   setup:
     - checkout
