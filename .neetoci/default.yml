@@ -1,0 +1,21 @@
+version: v1.0
+name: neetoCi
+parallelism: 1
+plan: professional-1
+global_job_config:
+  setup:
+    - checkout
+    - neetoci-version node 16.16.0
+    - cache restore
+    - yarn install
+    - cache store
+  jobs:
+    - name: CiChecks
+      commands:
+        - yarn build:ci
+        - yarn run cypress install
+        - yarn cypress info
+        - yarn cypress cache list
+        - yarn types
+        - yarn lint
+        - yarn test:unit:ci

@@ -1,0 +1,51 @@
+version: v1.0
+is_cypress: true
+fail_fast: false
+parallelism: 5
+plan: professional-1
+envs:
+  - key: DEPLOYMENT_URL
+    value: "http://localhost:3000"
+  - key: CY_GROUP
+    value: "API"
+  - key: CY_BROWSER
+    value: "chrome"
+  - key: CY_SPEC
+    value: "cypress/tests/api/*"
+  - key: CY_CONFIG
+    value: ""
+  - key: BACKEND_PORT
+    value: 3001
+  - key: PORT
+    value: 3000
+  - key: REACT_APP_BACKEND_PORT
+    value: 3001
+triggers:
+  - event: pull_request_labeled
+    label: cypress-backend-testing
+global_job_config:
+  setup:
+    - checkout
+    - neetoci-version node 16.16.0
+    - cache restore
+    - yarn install
+    - cache store
+  jobs:
+    - name: Cypress
+      commands:
+        - yarn run cypress install
+        - yarn build:ci
+        - yarn start:ci & npx wait-on http://localhost:3000
+        - npx cypress run --headless --parallel --record --key $RECORD_KEY --browser $CY_BROWSER --ci-build-id $CI_BUILD_ID --group "$CY_GROUP" --spec "$CY_SPEC" --config "$CY_CONFIG"
+lifecycle:
+  on_running:
+    - action: remove_labels
+      labels: ["cypress-backend-testing"]
+    - action: add_labels
+      labels: ["cypress-triggered-backend-testing"]
+
+  on_complete:
+    - action: remove_labels
+      labels: ["cypress-triggered-backend-testing"]
+    - action: add_labels
+      labels: ["cypress-completed-backend-testing"]

@@ -1,0 +1,51 @@
+version: v1.0
+is_cypress: true
+fail_fast: false
+parallelism: 5
+plan: professional-1
+envs:
+  - key: DEPLOYMENT_URL
+    value: "http://localhost:3000"
+  - key: CY_GROUP
+    value: "UI - Chrome"
+  - key: CY_BROWSER
+    value: "chrome"
+  - key: CY_SPEC
+    value: "cypress/tests/ui/*"
+  - key: BACKEND_PORT
+    value: 3001
+  - key: PORT
+    value: 3000
+  - key: REACT_APP_BACKEND_PORT
+    value: 3001
+triggers:
+  - event: pull_request_labeled
+    label: cypress-run
+  
+global_job_config:
+  setup:
+    - checkout
+    - neetoci-version node 16.16.0
+    - cache restore
+    - yarn install
+    - cache store
+  jobs:
+    - name: Cypress
+      commands:
+        - yarn build:ci
+        - yarn run cypress install
+        - yarn start:ci > /dev/null 2>&1 & 
+        - npx wait-on http://localhost:3000
+        - npx cypress run --headless --parallel --record --key $RECORD_KEY --browser $CY_BROWSER --ci-build-id $CI_BUILD_ID --group "$CY_GROUP" --spec "$CY_SPEC"
+lifecycle:
+  on_running:
+    - action: remove_labels
+      labels: ["cypress-run"]
+    - action: add_labels
+      labels: ["cypress-triggered"]
+
+  on_complete:
+    - action: remove_labels
+      labels: ["cypress-triggered"]
+    - action: add_labels
+      labels: ["cypress-completed"]
