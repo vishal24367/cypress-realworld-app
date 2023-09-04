@@ -1,7 +1,7 @@
 version: v1.0
 is_cypress: true
 fail_fast: false
-parallelism: 3
+parallelism: 5
 envs:
   - key: DEPLOYMENT_URL
     value: "http://localhost:3000"
